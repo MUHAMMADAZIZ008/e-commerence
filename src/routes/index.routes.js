@@ -1,0 +1,5 @@
+export * from './auth.routes.js'
+export * from './users.routes.js'
+export * from './addressess.routes.js'
+export * from './social.routes.js'
+export * from './category.routes.js'
