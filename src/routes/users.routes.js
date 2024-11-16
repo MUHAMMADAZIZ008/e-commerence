@@ -7,7 +7,7 @@ import {
     updateUserController
 } from '../controllers/index.js'
 import { userSchema } from '../validators/users.validators.js'
-import { checkSchema } from '../middlewares/index.js'
+import { authGuard, checkSchema, roleGuard } from '../middlewares/index.js'
 
 export const usersRouter = express()
 
