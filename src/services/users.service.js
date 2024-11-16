@@ -1,7 +1,6 @@
 import pool from "../databases/index.js"
 import { AppError } from "../utils/appError.js"
-import { logger } from "../utils/logger.js"
-import { sendMail } from "../utils/mail.js"
+import { logger, createAccessAndRefresh, sendMail } from "../utils/index.js"
 
 export const getAllUserService = async (query) => {
     try {
@@ -93,9 +92,9 @@ export const createUserService = async (body) => {
     }
 }
 
-export const authService = async (user) => {
+export const registerService = async (user) => {
     try {
-        const link = `http://localhost:3000/active/${user[0].id}`
+        const link = `http://localhost:3000/api/v1/auth/active/${user[0].id}`
 
         await sendMail(user[0].email, "cative link", link)
     } catch (error) {
@@ -104,9 +103,40 @@ export const authService = async (user) => {
     }
 }
 
-export const activeUserService = (id) => {
+export const loginUserService = async (user) => {
     try {
-        //chala
+        const currentUser = await getUserSevice("email", user.email)
+        if (currentUser.length === 0) {
+            throw new AppError("user or passowrd is wrong", 409)
+        }
+        if (!currentUser[0].is_active) {
+            throw new AppError(`you aren't avtice`, 400)
+        }
+
+        if (currentUser[0].password !== user.password) {
+            throw new AppError("user or passowrd is wrong", 409)
+        }
+
+        const tokens = createAccessAndRefresh(currentUser)
+        return tokens
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+export const activeUserService = async (id) => {
+    try {
+        const activeUser = await getUserSevice("id", id)
+        if (activeUser.length === 0) {
+            throw new AppError('uset not found', 404)
+        }
+        const data = [id]
+        const query = `
+            UPDATE users set is_active = true WHERE id = $1 RETURNING *
+        `
+        const updateUser = await pool.query(query, data)
+        return updateUser.rows
+
     } catch (error) {
         throw new Error(error);
 

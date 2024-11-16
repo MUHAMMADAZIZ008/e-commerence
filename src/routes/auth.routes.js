@@ -1,5 +1,5 @@
 import express from 'express'
-import { login, register } from '../controllers/index.js'
+import { activeUser, login, register } from '../controllers/index.js'
 import { checkSchema } from '../middlewares/index.js'
 import { userSchema } from '../validators/index.js'
 
