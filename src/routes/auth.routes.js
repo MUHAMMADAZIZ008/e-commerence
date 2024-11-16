@@ -1,8 +1,10 @@
 import express from 'express'
-import { authController } from '../controllers/index.js'
+import { login, register } from '../controllers/index.js'
+import { checkSchema } from '../middlewares/index.js'
+import { userSchema } from '../validators/index.js'
 
 export const authRoutes = express.Router()
 
 
-authRoutes.post('/register', authController.register)
-authRoutes.post('/login', authController.login)
+authRoutes.post('/register', checkSchema(userSchema), register)
+authRoutes.post('/login', login)

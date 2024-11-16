@@ -1,7 +1,7 @@
 import { logger } from "../../utils/logger.js"
 import pool from "../../databases/index.js"
 
-export const createUserTable = async() =>{
+export const createUserTable = async () => {
     try {
         // await pool.query(`
         //     CREATE TYPE USER_ROLE AS ENUM('user', 'admin', 'manager')
