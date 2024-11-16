@@ -104,6 +104,14 @@ export const authService = async (user) => {
     }
 }
 
+export const activeUserService = (id) => {
+    try {
+        //chala
+    } catch (error) {
+        throw new Error(error);
+
+    }
+}
 
 export const updateUserService = async (data) => {
     try {

@@ -16,6 +16,15 @@ export const register = async (req, res, next) => {
         next(error)
     }
 }
+export const activeUser = (req, res, next) => {
+    try {
+        const id = +req.pramas.id
+        const active = activeUserService(id)
+    } catch (error) {
+        next(error)
+    }
+}
+
 export const login = (req, res, next) => {
     try {
         res.send("ok")

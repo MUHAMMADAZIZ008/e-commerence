@@ -8,3 +8,4 @@ export const authRoutes = express.Router()
 
 authRoutes.post('/register', checkSchema(userSchema), register)
 authRoutes.post('/login', login)
+authRoutes.get('/active/:id', activeUser)
