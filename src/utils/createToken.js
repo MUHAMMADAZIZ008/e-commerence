@@ -4,11 +4,14 @@ import { AppError } from './appError.js';
 
 export const createAccessAndRefresh = (user) => {
     try {
+
         const payload = {
-            id: user.id,
-            username: user.username,
-            role: user.role
+            id: user[0].id,
+            username: user[0].user,
+            role: user[0].role
         }
+        // console.log(payload);
+
         const accessToken = jwt.sign(payload, config.access.secret, { expiresIn: config.access.time });
         const refreshToken = jwt.sign(payload, config.refresh.secret, { expiresIn: config.refresh.time });
         return {

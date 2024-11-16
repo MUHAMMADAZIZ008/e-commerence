@@ -106,6 +106,7 @@ export const registerService = async (user) => {
 export const loginUserService = async (user) => {
     try {
         const currentUser = await getUserSevice("email", user.email)
+
         if (currentUser.length === 0) {
             throw new AppError("user or passowrd is wrong", 409)
         }

@@ -38,6 +38,7 @@ export const getAddressessByIdController = async (req, res, next) => {
 
 export const createAddressessController = async (req, res, next) => {
     try {
+        const user = req.user
         const {
             user_id,
             title,
@@ -49,7 +50,7 @@ export const createAddressessController = async (req, res, next) => {
         } = req.body
 
         const data = [
-            user_id,
+            user_id || user.id,
             title,
             country,
             city,

@@ -7,12 +7,12 @@ import {
     updateAddressessController,
 } from '../controllers/index.js'
 import { addressessSchema } from '../validators/index.js'
-import { checkSchema } from '../middlewares/index.js'
+import { authGuard, checkSchema, roleGuard } from '../middlewares/index.js'
 
 export const addressessRouter = express()
 
 addressessRouter.get('/', getAllAddressessController)
 addressessRouter.get('/:id', getAddressessByIdController)
-addressessRouter.post('/',checkSchema(addressessSchema),createAddressessController)
-addressessRouter.put('/:id', updateAddressessController)
-addressessRouter.delete('/:id', deleteAddressessController)
+addressessRouter.post('/', checkSchema(addressessSchema), authGuard("access"), roleGuard(["user", "admin"]), createAddressessController)
+addressessRouter.put('/:id', authGuard("access"), roleGuard(["user", "admin"]), updateAddressessController)
+addressessRouter.delete('/:id', authGuard("access"), roleGuard(["user", "admin"]), deleteAddressessController)
